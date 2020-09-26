@@ -2,6 +2,12 @@
 
 var busmallarray = [];
 
+var chartarray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+
+
+var displaytimesArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+
+console.log('hi', chartarray);
 
 var imageone = document.getElementById('img1');
 var imagetwo = document.getElementById('img2');
@@ -138,11 +144,16 @@ function handler(event) {
         clickedimage.votes++
         
     }
+    
 
     if(totalClicks >= 25){
         sectionid.removeEventListener('click', handler);
 
+
+        chartvotes();
+        
         showresults();
+        createChart();        
         }
         
 }
@@ -158,12 +169,95 @@ for (var i=0; i< busmallarray.length; i++){
     var listofitems = document.createElement('li');
     listofitems.textContent = 'Votes for ' + busmallarray[i].name + ' are: ' + busmallarray[i].votes + ', and it has been displayed ' + busmallarray[i].displaytimes + ' times.';
     finalresults.appendChild(listofitems);    
+}
 
 }
 
 
+
+
+//chart
+
+function chartvotes(){
+
+    for(var y = 0; y < busmallarray.length; y++ ){
+        chartarray [y] = busmallarray[y].votes;
+
+       displaytimesArray [y] = busmallarray [y].displaytimes;
+
+    }
+    
+    
 }
 
 
 
 
+
+
+
+
+
+function createChart() {
+var ctx = document.getElementById('myChart').getContext('2d');
+
+
+
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair'], 
+        datasets: [{
+            label: 'Number of Votes',
+            data: chartarray,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        },
+        {
+            label: 'display times',
+            data: displaytimesArray,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+})
+}
